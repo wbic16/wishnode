@@ -9,6 +9,10 @@ if [ ! "x$USER" = "xroot" ]; then
   echo "Must run as root"
   exit 1
 fi
+echo "Installing zram-config..."
+apt install linux-modules-extra-raspi -y
+apt install zram-config -y
+
 echo "Reconfiguring zram for 12 GB..."
 chmod +x init-zram-swapping.sh
 cp init-zram-swapping.sh /usr/bin/init-zram-swapping
@@ -25,6 +29,10 @@ fi
 echo "Enabling zfs compression..."
 zfs set compress=lz4 phextio
 zfs list
+
+echo "Restoring default zfs config..."
+cp /etc/default/zfs zfs-config.backup
+cp zfs-config /etc/default/zfs
 
 if [ "x$HAVE_ZFS" = "x1" ]; then
   echo "Setup Complete."

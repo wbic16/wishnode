@@ -15,6 +15,10 @@ if [ ! "x$USER" = "xroot" ]; then
   echo "Must run as root"
   exit 1
 fi
+echo "Updating apt environment..."
+apt update
+apt upgrade
+
 echo "Installing raspi tooling..."
 apt install raspi-config -y
 

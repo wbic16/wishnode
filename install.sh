@@ -30,6 +30,7 @@ HAVE_ZFS=`zfs list |grep phextio |wc -l`
 if [ "x$HAVE_ZFS" = "x0" ]; then
   apt install zfsutils-linux -y
   zpool create $NAME /dev/sda
+  zfs import phextio
 fi
 
 echo "Enabling zfs compression..."

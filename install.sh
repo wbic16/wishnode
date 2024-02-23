@@ -15,6 +15,9 @@ if [ ! "x$USER" = "xroot" ]; then
   echo "Must run as root"
   exit 1
 fi
+echo "Installing raspi tooling..."
+apt install raspi-config -y
+
 echo "Installing zram-config..."
 apt install linux-modules-extra-raspi -y
 apt install zram-config -y
@@ -29,8 +32,8 @@ echo "Installing zfs..."
 HAVE_ZFS=`zfs list |grep phextio |wc -l`
 if [ "x$HAVE_ZFS" = "x0" ]; then
   apt install zfsutils-linux -y
-  zpool create $NAME /dev/sda
-  zfs import phextio
+  zpool create $NAME /dev/sda -f
+  zpool import phextio
 fi
 
 echo "Enabling zfs compression..."

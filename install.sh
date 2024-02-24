@@ -1,16 +1,21 @@
 #!/bin/sh
 NAME="phextio"
 MODEL=`cat /proc/cpuinfo |grep ^Model |sed 's/^.*: //g'`
+MODEL_OK=0
 if [ "x$MODEL" = "xRaspberry Pi 5 Model B Rev 1.0" ]; then
-  echo "$MODEL OK"
-else
-  if [ "x$MODEL" = "xRaspberry Pi 4 Model B Rev 1.4" ]; then
-    echo "$MODEL OK"
-  else
-    echo "Unexpected $MODEL"
-    exit 1
-  fi
+  MODEL_OK=1
 fi
+if [ "x$MODEL" = "xRaspberry Pi 4 Model B Rev 1.4" ]; then
+  MODEL_OK=1
+fi
+if [ "x$MODEL" = "xRaspberry Pi 4 Model B Rev 1.5" ]; then
+  MODEL_OK=1
+fi
+if [ "x$MODEL" = "x0" ]; then
+  echo "Unexpected $MODEL"
+  exit 1
+fi
+echo "$MODEL OK"
 if [ ! "x$USER" = "xroot" ]; then
   echo "Must run as root"
   exit 1

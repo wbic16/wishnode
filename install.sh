@@ -22,7 +22,7 @@ if [ ! "x$USER" = "xroot" ]; then
 fi
 echo "Updating apt environment..."
 apt update
-apt upgrade
+apt upgrade -y
 
 echo "Installing raspi tooling..."
 apt install raspi-config -y

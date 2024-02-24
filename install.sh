@@ -54,8 +54,11 @@ cp /etc/default/zfs zfs-config.backup
 cp zfs-config /etc/default/zfs
 
 echo "Deploying microk8s..."
-sudo snap install microk8s --classic
+snap install microk8s --classic
 
-if [ "x$HAVE_ZFS" = "x1" ]; then
-  echo "Setup Complete."
-fi
+echo "Deploying avahi..."
+snap install avahi
+cp phextio.service /etc/avahi/services/
+service avahi-daemon restart
+
+echo "Setup Complete."

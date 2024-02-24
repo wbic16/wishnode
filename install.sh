@@ -1,4 +1,5 @@
 #!/bin/sh
+EXPECTED="2024-02-23"
 NAME="phextio"
 MODEL=`cat /proc/cpuinfo |grep ^Model |sed 's/^.*: //g'`
 MODEL_OK=0
@@ -20,6 +21,12 @@ if [ ! "x$USER" = "xroot" ]; then
   echo "Must run as root"
   exit 1
 fi
+VERSION=`cat /etc/phextio/version`
+if [ "x$VERSION" = "x$EXPECTED" ]; then
+  echo "phextio $VERSION OK"
+  exit 0
+fi
+
 echo "Updating apt environment..."
 apt update
 apt upgrade -y
@@ -60,5 +67,8 @@ echo "Deploying avahi..."
 snap install avahi
 cp phextio.service /etc/avahi/services/
 service avahi-daemon restart
+
+mkdir /etc/phextio
+echo -n $EXPECTED >/etc/phextio/version
 
 echo "Setup Complete."

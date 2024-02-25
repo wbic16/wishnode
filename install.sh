@@ -26,7 +26,10 @@ if [ ! "x$USER" = "xroot" ]; then
   echo "Must run as root"
   exit 1
 fi
-VERSION=`cat /etc/phextio/version`
+VERSION=""
+if [ -f "/etc/phextio/version" ]; then
+  VERSION=`cat /etc/phextio/version`
+fi
 if [ "x$VERSION" = "x$EXPECTED" ]; then
   echo "phextio $VERSION OK"
   exit 0
@@ -73,7 +76,9 @@ snap install avahi
 cp phextio.service /etc/avahi/services/
 service avahi-daemon restart
 
-mkdir /etc/phextio
+if [ ! -d /etc/phextio ]; then
+  mkdir /etc/phextio
+fi
 echo -n $EXPECTED >/etc/phextio/version
 
 echo "Setup Complete."

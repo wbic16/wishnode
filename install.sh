@@ -1,8 +1,13 @@
 #!/bin/sh
-EXPECTED="2024-02-23"
+EXPECTED="2024-02-25"
 NAME="phextio"
 MODEL=`cat /proc/cpuinfo |grep ^Model |sed 's/^.*: //g'`
 MODEL_OK=0
+NODE=/dev/sda
+HAVE_NVME=`lsblk |grep '^nvme0n1' |wc -l`
+if [ "x$HAVE_NVME" = "x1" ]; then
+  NODE=/dev/nvme0n1
+fi
 if [ "x$MODEL" = "xRaspberry Pi 5 Model B Rev 1.0" ]; then
   MODEL_OK=1
 fi
@@ -48,7 +53,7 @@ echo "Installing zfs..."
 HAVE_ZFS=`zfs list |grep phextio |wc -l`
 if [ "x$HAVE_ZFS" = "x0" ]; then
   apt install zfsutils-linux -y
-  zpool create $NAME /dev/sda -f
+  zpool create $NAME $NODE -f
   zpool import phextio
 fi
 

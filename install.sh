@@ -49,6 +49,9 @@ apt upgrade -y
 echo "Installing raspi tooling..."
 apt install raspi-config -y
 
+echo "Installing net tools..."
+apt install net-tools
+
 echo "Installing zram-config..."
 apt install linux-modules-extra-raspi -y
 apt install zram-config -y

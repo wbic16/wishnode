@@ -5,6 +5,10 @@ MODEL=`cat /proc/cpuinfo |grep ^Model |sed 's/^.*: //g'`
 MODEL_OK=0
 NODE=/dev/sda
 HAVE_NVME=`lsblk |grep '^nvme0n1' |wc -l`
+HAVE_FORCE=0
+if [ "x$1" = "x-f" ]; then
+  HAVE_FORCE=1
+fi
 if [ "x$HAVE_NVME" = "x1" ]; then
   NODE=/dev/nvme0n1
 fi
@@ -29,6 +33,9 @@ fi
 VERSION=""
 if [ -f "/etc/phextio/version" ]; then
   VERSION=`cat /etc/phextio/version`
+fi
+if [ "x$HAVE_FORCE" = "x1" ]; then
+  VERSION=""
 fi
 if [ "x$VERSION" = "x$EXPECTED" ]; then
   echo "phextio $VERSION OK"

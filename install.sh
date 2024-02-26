@@ -1,5 +1,5 @@
 #!/bin/sh
-EXPECTED="2024-02-25"
+EXPECTED="2024-02-26"
 NAME="phextio"
 MODEL=`cat /proc/cpuinfo |grep ^Model |sed 's/^.*: //g'`
 MODEL_OK=0
@@ -77,6 +77,7 @@ cp zfs-config /etc/default/zfs
 
 echo "Deploying microk8s..."
 snap install microk8s --classic
+microk8s enable hostpath-storage
 
 echo "Deploying avahi..."
 snap install avahi

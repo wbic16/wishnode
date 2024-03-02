@@ -8,4 +8,4 @@ components
 * zfs
 * microk8s
 * avahi
-* 11dhost
+* ph11d

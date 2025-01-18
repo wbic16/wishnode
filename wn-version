@@ -1,0 +1,2 @@
+export WN_VERSION="0.0.1"
+echo $WN_VERSION

@@ -6,6 +6,6 @@ components
 ----------
 * zram
 * zfs
-* microk8s
 * avahi
-* ph11d
+* sq
+* ollama
